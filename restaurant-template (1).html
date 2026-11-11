@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Restaurant Website Template</title>
+<style>
+:root{--bg:#fff7ea;--fg:#141414;--mut:#6b6458;--card:#fff;--line:#eadfcb;--acc:#ff7a1a;--accfg:#111;--ok:#1f9d55;--bad:#e53935;--yel:#ffc928;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0b;--fg:#f5f0e6;--mut:#a8a095;--card:#161616;--line:#2c2c2c;--acc:#ff8a2b;--accfg:#111;--ok:#3ddc84;--bad:#ff5a52;--yel:#ffd23f}}
+:root[data-theme="dark"]{--bg:#0b0b0b;--fg:#f5f0e6;--mut:#a8a095;--card:#161616;--line:#2c2c2c;--acc:#ff8a2b;--accfg:#111;--ok:#3ddc84;--bad:#ff5a52;--yel:#ffd23f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;font-weight:600;margin:0;line-height:1.2}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{font-size:20px;letter-spacing:.08em;text-transform:uppercase}
+nav{display:flex;gap:18px;align-items:center;font-size:14px}
+nav a.l{color:var(--mut)}nav a.l:hover{color:var(--fg)}
+@media(max-width:600px){.brand{font-size:16px}}
+.dd{position:relative}
+.ddm{display:none;position:absolute;right:0;top:calc(100% + 10px);min-width:210px;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 12px 32px rgba(0,0,0,.2)}
+.ddm.open{display:flex;animation:dd .15s ease-out}
+@keyframes dd{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+nav .ddm a{display:block;padding:11px 14px;border:0;background:none;border-radius:8px;color:var(--fg);font-size:15px;white-space:nowrap}
+nav .ddm a:hover{background:var(--line)}
+button,.btn{font:inherit;font-size:14px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:8px 14px;border-radius:8px}
+.pri{background:var(--acc);color:var(--accfg);border-color:var(--acc);font-weight:600}
+.sm{padding:4px 10px;font-size:12px}.danger{color:var(--bad)}
+.hero{padding:80px 0 70px;text-align:center;background:linear-gradient(color-mix(in srgb,var(--card) 55%,transparent),transparent)}
+.hero h1{font-size:clamp(34px,8vw,60px);margin-bottom:14px}
+.hero p{color:var(--mut);max-width:480px;margin:0 auto 26px}
+section{padding:56px 0}
+h2{font-size:30px;margin-bottom:6px}.sub{color:var(--mut);margin:0 0 24px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tabs button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.item{display:flex;justify-content:space-between;gap:12px}
+.item b{display:block}.item span{color:var(--mut);font-size:14px}.price{font-weight:600;color:var(--acc);white-space:nowrap}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+@media(max-width:700px){.about{grid-template-columns:1fr}}
+.ph{aspect-ratio:4/3;border-radius:12px;background:var(--line);display:grid;place-items:center;color:var(--mut);font-size:14px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:12px}.f .w{grid-column:1/-1}
+@media(max-width:560px){.f{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mut);font-size:14px;text-align:center}
+.msg{margin-top:12px;color:var(--ok);font-size:14px;min-height:20px}
+.thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;display:block;flex:none}
+.cimg{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block}
+.hi,.hi p{color:#fff}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#app{position:relative;z-index:1}
+.ann{background:var(--acc);color:var(--accfg);text-align:center;padding:8px 16px;font-size:14px;font-weight:600}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
+#cart .ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
+#cart .dr{position:fixed;top:0;right:0;bottom:0;width:min(380px,100%);background:var(--card);z-index:21;padding:calc(20px + env(safe-area-inset-top,0px)) 20px 20px;overflow:auto;border-left:1px solid var(--line)}
+header{border-bottom:3px solid;border-image:linear-gradient(90deg,var(--bad),var(--acc),var(--yel),var(--ok)) 1}
+.hero{background:radial-gradient(circle at 15% 20%,rgba(255,122,26,.5),transparent 50%),radial-gradient(circle at 88% 25%,rgba(229,57,53,.4),transparent 45%),radial-gradient(circle at 70% 100%,rgba(31,157,85,.45),transparent 45%),radial-gradient(circle at 40% 0,rgba(255,201,40,.25),transparent 40%),rgba(10,10,10,.82);color:#fff}
+.hero p{color:#d8d0c3}
+.ann{background:var(--yel);color:#111}
+.grid .card:nth-child(4n+1){border-top:3px solid var(--acc)}.grid .card:nth-child(4n+2){border-top:3px solid var(--yel)}.grid .card:nth-child(4n+3){border-top:3px solid var(--ok)}.grid .card:nth-child(4n){border-top:3px solid var(--bad)}
+.stats .stat:nth-child(4n+1){border-left:4px solid var(--acc)}.stats .stat:nth-child(4n+2){border-left:4px solid var(--yel)}.stats .stat:nth-child(4n+3){border-left:4px solid var(--ok)}.stats .stat:nth-child(4n){border-left:4px solid var(--bad)}
+.tag.star{background:var(--yel);color:#111;border-color:var(--yel);font-weight:600}
+footer{background:#0b0b0b;color:#cfc7ba;border-top:3px solid var(--acc)}
+/* admin */
+.login{max-width:360px;margin:80px auto;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:22px}
+.stat b{font-size:28px;display:block;font-family:Georgia,serif}.stat span{color:var(--mut);font-size:13px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--mut);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+.tag.confirmed{color:var(--ok);border-color:var(--ok)}.tag.cancelled{color:var(--bad);border-color:var(--bad)}.tag.pending{color:var(--acc);border-color:var(--acc)}
+.row{display:flex;gap:6px;flex-wrap:wrap}.hide{display:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:24px 0 16px}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const today=()=>new Date().toISOString().slice(0,10);
+const defaults={
+ settings:{name:'THE NAME',tagline:'YOUR TAGLINE — a short sentence describing your restaurant.',phone:'YOUR PHONE',email:'YOUR EMAIL',address:'YOUR ADDRESS, YOUR CITY',hours:'Mon–Sun: YOUR HOURS',about:'YOUR STORY. Tell guests who you are, where your ingredients come from and what makes dining with you special. Edit this text from the admin dashboard.'},
+ menu:[
+  {id:'m1',cat:'Starters',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:9,on:true},
+  {id:'m2',cat:'Starters',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:11,on:true},
+  {id:'m3',cat:'Mains',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:22,on:true},
+  {id:'m4',cat:'Mains',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:26,on:true},
+  {id:'m5',cat:'Mains',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:19,on:true},
+  {id:'m6',cat:'Desserts',name:'YOUR DISH NAME',desc:'Short description of the dish and its main ingredients.',price:8,on:true},
+  {id:'m7',cat:'Drinks',name:'YOUR DRINK NAME',desc:'Short description of the drink.',price:7,on:true}],
+ res:[
+  {id:'r1',name:'GUEST NAME',phone:'000-000-0000',date:today(),time:'19:00',guests:4,status:'pending'},
+  {id:'r2',name:'GUEST NAME',phone:'000-000-0000',date:today(),time:'20:30',guests:2,status:'confirmed'}],
+ pages:[{id:'p1',title:'Events',slug:'events',body:'YOUR PAGE TEXT. Use pages for events, private dining, catering, jobs or anything else.\n\nCreate, edit and delete pages from the admin dashboard.',img:'',on:true}],
+ gallery:[],
+ tests:[{name:'GUEST NAME',stars:5,text:'YOUR REVIEW. Add real guest reviews from the admin dashboard.'},{name:'GUEST NAME',stars:5,text:'YOUR REVIEW. Short, friendly and honest.'}]
+};
+let S;
+try{S=JSON.parse(localStorage.getItem('rt_data')||'null')}catch(e){S=null}
+S=S||JSON.parse(JSON.stringify(defaults));S.pages=S.pages||JSON.parse(JSON.stringify(defaults.pages));S.gallery=S.gallery||[];S.orders=S.orders||[];S.subs=S.subs||[];S.tests=S.tests||JSON.parse(JSON.stringify(defaults.tests));
+S.settings=Object.assign({announce:'YOUR OFFER — e.g. Free dessert with every main this week',accent:'',ig:'',fb:'',pw:'admin123'},S.settings);
+try{const th=localStorage.getItem('rt_theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+applyAccent();
+const save=()=>{try{localStorage.setItem('rt_data',JSON.stringify(S))}catch(e){alert('Storage is full. Please remove some photos.')}};
+let authed=false,tab='Overview',cat='All',msg='';
+function pick(cb,multi){const i=document.createElement('input');i.type='file';i.accept='image/*';i.multiple=!!multi;
+ i.onchange=()=>[...i.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(f)});i.click()}
+const pageLinks=()=>S.pages.filter(p=>p.on).map(p=>`<a class="l" href="#page-${esc(p.slug)}">${esc(p.title)}</a>`).join('');
+const pageById=id=>S.pages.find(p=>p.id===id),dishById=id=>S.menu.find(m=>m.id===id);
+
+function route(x){const h=x!==undefined?x:location.hash;h==='#admin'?admin():h.startsWith('#page-')?pg(h.slice(6)):site();window.scrollTo(0,0);reveal()}
+window.addEventListener('hashchange',()=>route());
+/* 3D particle background */
+(function(){const c=$('#bg'),x=c.getContext('2d');let W,H,mx=0,my=0,t=0,col='#b5532a';
+ const N=matchMedia('(max-width:700px)').matches?100:200,calm=matchMedia('(prefers-reduced-motion:reduce)').matches,P=[];
+ for(let i=0;i<N;i++)P.push({x:(Math.random()-.5)*2,y:(Math.random()-.5)*2,z:(Math.random()-.5)*2,r:Math.random()*1.5+.7,c:Math.floor(Math.random()*4)});
+ function size(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';x.setTransform(d,0,0,d,0,0)}
+ addEventListener('resize',size);size();
+ addEventListener('pointermove',e=>{mx=e.clientX/W-.5;my=e.clientY/H-.5});
+ function frame(){
+  t+=calm?0:.0025;x.clearRect(0,0,W,H);
+  col=getComputedStyle(document.documentElement).getPropertyValue('--acc').trim()||col;
+  const ay=t+mx*.8,ax=my*.6+Math.sin(t*2)*.15,cy=Math.cos(ay),sy=Math.sin(ay),cx=Math.cos(ax),sx=Math.sin(ax),q=[];
+  for(const p of P){const X=p.x*cy-p.z*sy,Z0=p.x*sy+p.z*cy,Y=p.y*cx-Z0*sx,Z=p.y*sx+Z0*cx,f=2.4/(2.4+Z);
+   q.push({X:W/2+X*f*W*.42,Y:H/2+Y*f*H*.42,f,a:.15+.6*(1-(Z+1.4)/2.8),r:p.r*f,c:p.c})}
+  x.strokeStyle=col;x.lineWidth=.6;const pal=[col,'#ffc928','#2fc16b','#ff4d45'];
+  for(let i=0;i<q.length;i++){const a=q[i];
+   for(let j=i+1;j<q.length;j++){const b=q[j],dx=a.X-b.X,dy=a.Y-b.Y,d=dx*dx+dy*dy;
+    if(d<7000){x.globalAlpha=(1-d/7000)*.18*Math.min(a.a,b.a)*2;x.beginPath();x.moveTo(a.X,a.Y);x.lineTo(b.X,b.Y);x.stroke()}}
+   x.globalAlpha=a.a;x.fillStyle=pal[a.c];x.beginPath();x.arc(a.X,a.Y,a.r,0,6.283);x.fill()}
+  x.globalAlpha=1;requestAnimationFrame(frame)}
+ frame()})();
+
+function site(){
+ const s=S.settings,cats=['All',...new Set(S.menu.filter(m=>m.on).map(m=>m.cat))];
+ const items=S.menu.filter(m=>m.on&&(cat==='All'||m.cat===cat));
+ document.title=s.name;
+ $('#app').innerHTML=`
+ <header><div class="wrap"><a class="brand" href="#">${esc(s.name)}</a>
+ <nav><button class="sm" onclick="cartOpen()">🛒 <b id="cc">${cartN()}</b></button><a class="btn sm" href="#admin">Admin</a><div class="dd"><button class="sm" onclick="tdd(event)">☰ Menu</button><div class="ddm" id="ddm"><a class="l" href="#menu" onclick="go('menu')">Food Menu</a>${S.tests.length?'<a class="l" href="#reviews" onclick="go(\'reviews\')">Reviews</a>':''}<a class="l" href="#about" onclick="go('about')">About</a>${S.gallery.length?'<a class="l" href="#gallery" onclick="go(\'gallery\')">Gallery</a>':''}<a class="l" href="#reserve" onclick="go('reserve')">Reserve</a><a class="l" href="#contact" onclick="go('contact')">Contact</a><a class="l" href="#" onclick="event.preventDefault();theme()">◐ Light / Dark</a>
+ ${pageLinks()}<a class="btn sm" href="#admin">Admin</a></div></div></nav></div></header>
+ ${s.announce?`<div class="ann">${esc(s.announce)}</div>`:''}<div class="hero${s.heroImg?' hi':''}"${s.heroImg?` style="background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url(${s.heroImg}) center/cover"`:''}><div class="wrap"><h1>${esc(s.name)}</h1><p>${esc(s.tagline)}</p><button class="pri" onclick="go('reserve')">Book a table</button></div></div>
+ <section id="menu"><div class="wrap"><h2>Our Menu</h2><p class="sub">Fresh, seasonal and made to order.</p>
+ <div class="tabs">${cats.map(c=>`<button class="${c===cat?'on':''}" onclick="cat='${esc(c)}';site()">${esc(c)}</button>`).join('')}</div>
+ <input type="search" placeholder="Search dishes…" oninput="fq(this.value)" style="margin-bottom:14px"><div class="grid" id="mg">${items.map(m=>`<div class="card item" data-t="${esc((m.name+' '+m.desc).toLowerCase())}">${m.img?`<img class="thumb" src="${m.img}" alt="">`:''}<div style="flex:1"><b>${esc(m.name)}${m.star?' <small class="tag star">★ Chef’s pick</small>':''}</b><span>${esc(m.desc)}</span></div><div style="text-align:right"><div class="price">$${(+m.price).toFixed(2)}</div><button class="sm pri" style="margin-top:6px" onclick="addCart('${m.id}')">Add</button></div></div>`).join('')||'<p class="sub">No dishes yet.</p>'}</div></div></section>
+ <section id="about"><div class="wrap about"><div><h2>About Us</h2><p class="sub">${esc(s.about)}</p></div>${s.aboutImg?`<img class="cimg" src="${s.aboutImg}" alt="">`:'<div class="ph">YOUR PHOTO</div>'}</div></section>
+ ${S.tests.length?`<section id="reviews"><div class="wrap"><h2>What Guests Say</h2><div class="grid" style="margin-top:18px">${S.tests.map(t=>`<div class="card"><div style="color:var(--yel);font-size:18px">${'★'.repeat(t.stars)}</div><p>“${esc(t.text)}”</p><b>${esc(t.name)}</b></div>`).join('')}</div></div></section>`:''}
+ ${S.gallery.length?`<section id="gallery"><div class="wrap"><h2>Gallery</h2><div class="grid" style="margin-top:18px">${S.gallery.map(g=>`<img class="cimg" src="${g}" alt="">`).join('')}</div></div></section>`:''}
+ <section id="reserve"><div class="wrap"><h2>Reserve a Table</h2><p class="sub">We’ll confirm your booking shortly.</p>
+ <form class="card f" onsubmit="book(event)">
+ <div><label>YOUR NAME</label><input name="name" required></div><div><label>Phone</label><input name="phone" required></div>
+ <div><label>Date</label><input type="date" name="date" min="${today()}" value="${today()}" required></div>
+ <div><label>Time</label><input type="time" name="time" value="19:00" required></div>
+ <div class="w"><label>Guests</label><select name="guests">${[1,2,3,4,5,6,7,8,10,12].map(n=>`<option>${n}</option>`).join('')}</select></div>
+ <div class="w"><button class="pri" style="width:100%">Request reservation</button><div class="msg" id="bm">${esc(msg)}</div></div></form></div></section>
+ <section id="contact"><div class="wrap"><h2>Contact</h2><div class="grid" style="margin-top:18px">
+ <div class="card"><b>Address</b><br><span class="sub">${esc(s.address)}</span></div>
+ <div class="card"><b>Hours</b><br><span class="sub">${esc(s.hours)}</span></div>
+ <div class="card"><b>Phone &amp; Email</b><br><span class="sub">${esc(s.phone)}<br>${esc(s.email)}</span><div class="row" style="margin-top:10px"><a class="btn sm" href="tel:${esc(s.phone)}">Call</a><a class="btn sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(s.address)}">Directions</a>${s.ig?`<a class="btn sm" target="_blank" rel="noopener" href="${esc(s.ig)}">Instagram</a>`:''}${s.fb?`<a class="btn sm" target="_blank" rel="noopener" href="${esc(s.fb)}">Facebook</a>`:''}</div></div></div>
+ <form class="card f" style="margin-top:14px" onsubmit="sub(event)"><div class="w"><label>Newsletter: get offers by email</label></div><div><input type="email" name="email" placeholder="YOUR EMAIL" required></div><div><button class="pri">Subscribe</button></div><div class="msg w" id="nm"></div></form></div></section>
+ <footer><div class="wrap">© ${new Date().getFullYear()} ${esc(s.name)}. All rights reserved.</div></footer>`;
+ msg='';
+}
+function applyAccent(){const r=document.documentElement.style;S.settings.accent&&S.settings.accent!=='#b5532a'?r.setProperty('--acc',S.settings.accent):r.removeProperty('--acc')}
+function theme(){const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark';try{localStorage.setItem('rt_theme',r.dataset.theme)}catch(e){}}
+function reveal(){if(!('IntersectionObserver' in window))return;const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('#app section .card,#app section h2').forEach(e=>{e.classList.add('rv');o.observe(e)})}
+function fq(v){v=v.toLowerCase();document.querySelectorAll('#mg .item').forEach(e=>e.style.display=e.dataset.t.includes(v)?'':'none')}
+let cart={};
+const cartN=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+function upd(){const e=$('#cc');if(e)e.textContent=cartN()}
+function addCart(id){cart[id]=(cart[id]||0)+1;upd()}
+function cartClose(){const d=$('#cart');d&&d.remove()}
+function qty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];upd();cartOpen()}
+function cartOpen(){const items=Object.keys(cart).map(id=>[dishById(id),cart[id]]).filter(x=>x[0]),tot=items.reduce((a,[m,n])=>a+m.price*n,0);
+ let d=$('#cart');if(!d){d=document.createElement('div');d.id='cart';document.body.appendChild(d)}
+ d.innerHTML=`<div class="ov" onclick="cartClose()"></div><div class="dr"><div class="item" style="margin-bottom:12px;align-items:center"><h3>Your order</h3><button class="sm" onclick="cartClose()">✕</button></div>
+ ${items.map(([m,n])=>`<div class="item" style="margin-bottom:10px;align-items:center"><div style="flex:1"><b>${esc(m.name)}</b><span>$${(+m.price).toFixed(2)}</span></div><div class="row" style="align-items:center"><button class="sm" onclick="qty('${m.id}',-1)">−</button><b>${n}</b><button class="sm" onclick="qty('${m.id}',1)">+</button></div></div>`).join('')||'<p class="sub">Your cart is empty.</p>'}
+ ${items.length?`<p><b>Total: $${tot.toFixed(2)}</b></p><form onsubmit="order(event)"><input name="name" placeholder="YOUR NAME" required style="margin-bottom:8px"><input name="phone" placeholder="Phone" required style="margin-bottom:8px"><select name="type" style="margin-bottom:8px"><option>Pickup</option><option>Delivery</option><option>Dine-in</option></select><input name="note" placeholder="Notes (optional)" style="margin-bottom:10px"><button class="pri" style="width:100%">Place order</button></form>`:''}</div>`}
+function order(e){e.preventDefault();const f=Object.fromEntries(new FormData(e.target)),items=Object.keys(cart).map(id=>{const m=dishById(id);return m&&{name:m.name,n:cart[id],price:+m.price}}).filter(Boolean);
+ S.orders.unshift({id:uid(),...f,items,total:items.reduce((a,i)=>a+i.n*i.price,0),date:today(),status:'new'});save();cart={};upd();
+ $('#cart .dr').innerHTML='<h3>Thank you!</h3><p class="sub">Your order was received.</p><button class="pri" onclick="cartClose()">Close</button>'}
+function sub(e){e.preventDefault();S.subs.unshift({email:new FormData(e.target).get('email'),date:today()});save();e.target.reset();$('#nm').textContent='Subscribed ✓'}
+function ordSt(id,v){S.orders.find(o=>o.id===id).status=v;save()}
+function delOrd(id){if(confirm('Delete this order?')){S.orders=S.orders.filter(o=>o.id!==id);save();admin()}}
+function addTest(e){e.preventDefault();const f=Object.fromEntries(new FormData(e.target));S.tests.unshift({name:f.name,stars:+f.stars,text:f.text});save();admin()}
+function backup(){navigator.clipboard?navigator.clipboard.writeText(JSON.stringify(S)).then(()=>alert('Backup copied. Paste it somewhere safe.')):prompt('Copy your backup',JSON.stringify(S))}
+function restore(){const t=prompt('Paste your backup');if(t){try{S=JSON.parse(t);save();location.reload()}catch(e){alert('Invalid backup')}}}
+function chart(){const days=[...Array(7)].map((_,i)=>{const d=new Date(Date.now()-(6-i)*864e5).toISOString().slice(0,10);return[d.slice(5),S.orders.filter(o=>o.date===d&&o.status!=='cancelled').reduce((a,o)=>a+o.total,0)]}),mx=Math.max(1,...days.map(d=>d[1]));
+ return `<div class="card" style="margin-bottom:14px"><h3 style="margin-bottom:12px">Revenue — last 7 days</h3><div style="display:flex;gap:8px;align-items:flex-end;height:110px">${days.map(([d,v])=>`<div style="flex:1;text-align:center;font-size:11px;color:var(--mut)"><div style="background:var(--acc);height:${v/mx*80}px;border-radius:4px 4px 0 0;min-height:2px"></div>${d}</div>`).join('')}</div></div>`}
+function tdd(e){e.stopPropagation();$('#ddm').classList.toggle('open')}
+document.addEventListener('click',e=>{const m=$('#ddm');m&&m.classList.remove('open');if(e.defaultPrevented)return;const a=e.target.closest&&e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href');
+ if(h==='#'||h==='#admin'||h.startsWith('#page-')){e.preventDefault();try{history.replaceState(null,'',h==='#'?location.pathname+location.search:h)}catch(_){}route(h==='#'?'':h)}});
+function go(id){event&&event.preventDefault();const e=document.getElementById(id);e&&e.scrollIntoView()}
+function pg(slug){const p=S.pages.find(x=>x.slug===slug&&x.on);if(!p){location.hash='';return}
+ const s=S.settings;document.title=p.title+' · '+s.name;
+ $('#app').innerHTML=`<header><div class="wrap"><a class="brand" href="#">${esc(s.name)}</a><nav><div class="dd"><button class="sm" onclick="tdd(event)">☰ Menu</button><div class="ddm" id="ddm"><a class="l" href="#">Home</a>${pageLinks()}<a class="l" href="#" onclick="event.preventDefault();theme()">◐ Light / Dark</a><a class="btn sm" href="#admin">Admin</a></div></div></nav></div></header>
+ <section><div class="wrap" style="max-width:720px"><h2 style="margin-bottom:18px">${esc(p.title)}</h2>${p.img?`<img class="cimg" style="margin-bottom:20px" src="${p.img}" alt="">`:''}${esc(p.body).split(/\n+/).map(t=>`<p>${t}</p>`).join('')}</div></section>
+ <footer><div class="wrap">© ${new Date().getFullYear()} ${esc(s.name)}. All rights reserved.</div></footer>`}
+function book(e){e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+ S.res.unshift({id:uid(),name:f.name,phone:f.phone,date:f.date,time:f.time,guests:+f.guests,status:'pending'});save();
+ e.target.reset();$('#bm').textContent='Thank you! Your request was received.'}
+
+function admin(){
+ document.title='Admin Dashboard';
+ if(!authed){$('#app').innerHTML=`<div class="wrap"><form class="card login" onsubmit="login(event)"><h2>Admin Login</h2><p class="sub">Demo password: <b>admin123</b><br>(change it under Settings → Admin password)</p>
+ <input type="password" id="pw" placeholder="Password" autofocus><div class="msg" style="color:var(--bad)" id="le"></div>
+ <button class="pri" style="width:100%;margin-top:8px">Sign in</button><p><a href="#" class="sub">← Back to website</a></p></form></div>`;return}
+ const tabs=['Overview','Orders','Menu','Gallery','Pages','Reservations','Reviews','Subscribers','Settings'];
+ $('#app').innerHTML=`<div class="wrap"><div class="top"><h2>${esc(S.settings.name)} · Admin</h2><div class="row"><a class="btn sm" href="#">View site</a><button class="sm" onclick="authed=false;admin()">Log out</button></div></div>
+ <div class="tabs">${tabs.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';admin()">${t}</button>`).join('')}</div><div id="pane"></div></div>`;
+ $('#pane').innerHTML=panes[tab]();
+}
+function login(e){e.preventDefault();if($('#pw').value===S.settings.pw){authed=true;admin()}else $('#le').textContent='Wrong password'}
+const panes={
+ Overview(){const t=S.res.filter(r=>r.date===today()),p=S.res.filter(r=>r.status==='pending').length;
+  return `<div class="stats">
+  <div class="card stat"><b>${S.res.length}</b><span>Total reservations</span></div>
+  <div class="card stat"><b>${p}</b><span>Pending</span></div>
+  <div class="card stat"><b>${t.reduce((a,r)=>a+ +r.guests,0)}</b><span>Guests today</span></div>
+  <div class="card stat"><b>${S.menu.length}</b><span>Menu items</span></div>
+  <div class="card stat"><b>${S.orders.length}</b><span>Orders</span></div>
+  <div class="card stat"><b>$${S.orders.filter(o=>o.status!=='cancelled').reduce((a,o)=>a+o.total,0).toFixed(0)}</b><span>Revenue</span></div></div>${chart()}
+  <div class="card"><h3 style="margin-bottom:10px">Latest reservations</h3>${resTable(S.res.slice(0,5),false)}</div>`},
+ Menu(){return `<div class="card" style="margin-bottom:16px"><h3 style="margin-bottom:12px">Add dish</h3>
+  <form class="f" onsubmit="addDish(event)"><div><label>Name</label><input name="name" required></div>
+  <div><label>Category</label><input name="cat" list="cl" value="Mains" required><datalist id="cl">${[...new Set(S.menu.map(m=>m.cat))].map(c=>`<option>${esc(c)}`).join('')}</datalist></div>
+  <div class="w"><label>Description</label><input name="desc"></div>
+  <div><label>Price ($)</label><input name="price" type="number" step="0.01" min="0" required></div>
+  <div style="align-self:end"><button class="pri" style="width:100%">Add</button></div></form></div>
+  <div class="card tw"><table><tr><th>Dish</th><th>Category</th><th>Price</th><th>Shown</th><th></th></tr>
+  ${S.menu.map(m=>`<tr><td><div class="row" style="flex-wrap:nowrap;align-items:center">${m.img?`<img class="thumb" style="width:40px;height:40px" src="${m.img}" alt="">`:''}${esc(m.name)}</div></td><td>${esc(m.cat)}</td><td>$${(+m.price).toFixed(2)}</td>
+  <td><input type="checkbox" style="width:auto" ${m.on?'checked':''} onchange="tog('${m.id}')"></td>
+  <td><div class="row"><button class="sm" onclick="pick(d=>{dishById('${m.id}').img=d;save();admin()})">${m.img?'Change photo':'Photo'}</button><button class="sm" onclick="dishById('${m.id}').star=!dishById('${m.id}').star;save();admin()">${m.star?'★':'☆'}</button><button class="sm" onclick="editDish('${m.id}')">Edit</button><button class="sm danger" onclick="delDish('${m.id}')">Delete</button></div></td></tr>`).join('')}</table></div>`},
+ Orders(){return `<div class="card tw"><table><tr><th>Customer</th><th>Items</th><th>Total</th><th>Type</th><th>Status</th><th></th></tr>${S.orders.map(o=>`<tr><td>${esc(o.name)}<br><span class="sub" style="font-size:12px;margin:0">${esc(o.phone)}</span></td><td>${o.items.map(i=>i.n+'× '+esc(i.name)).join('<br>')}${o.note?`<br><i>${esc(o.note)}</i>`:''}</td><td>$${o.total.toFixed(2)}</td><td>${esc(o.type)}</td><td><select onchange="ordSt('${o.id}',this.value)">${['new','preparing','ready','done','cancelled'].map(s=>`<option ${o.status===s?'selected':''}>${s}</option>`).join('')}</select></td><td><button class="sm danger" onclick="delOrd('${o.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="6">No orders yet.</td></tr>'}</table></div>`},
+ Reviews(){return `<form class="card f" style="margin-bottom:14px" onsubmit="addTest(event)"><div><label>Guest name</label><input name="name" required></div><div><label>Stars</label><select name="stars">${[5,4,3].map(n=>`<option>${n}</option>`).join('')}</select></div><div class="w"><label>Review</label><textarea name="text" rows="2" required></textarea></div><div class="w"><button class="pri">Add review</button></div></form><div class="card tw"><table>${S.tests.map((t,i)=>`<tr><td>${'★'.repeat(t.stars)}</td><td>${esc(t.name)}<br><span class="sub" style="font-size:12px;margin:0">${esc(t.text)}</span></td><td><button class="sm danger" onclick="S.tests.splice(${i},1);save();admin()">Delete</button></td></tr>`).join('')||'<tr><td>No reviews.</td></tr>'}</table></div>`},
+ Subscribers(){return `<div class="card"><button class="pri" onclick="navigator.clipboard&&navigator.clipboard.writeText(S.subs.map(s=>s.email).join(', ')).then(()=>alert('Copied'))">Copy all emails</button></div><div class="card tw" style="margin-top:14px"><table>${S.subs.map((s,i)=>`<tr><td>${esc(s.email)}</td><td>${s.date}</td><td><button class="sm danger" onclick="S.subs.splice(${i},1);save();admin()">Remove</button></td></tr>`).join('')||'<tr><td>No subscribers yet.</td></tr>'}</table></div>`},
+ Gallery(){return `<div class="card"><button class="pri" onclick="pick(d=>{S.gallery.push(d);save();admin()},1)">+ Upload photos</button><p class="sub" style="margin:10px 0 0">Choose from your phone gallery or camera. Photos are resized automatically.</p></div>
+  <div class="grid" style="margin-top:14px">${S.gallery.map((g,i)=>`<div class="card"><img class="cimg" src="${g}" alt=""><button class="sm danger" style="margin-top:8px" onclick="S.gallery.splice(${i},1);save();admin()">Remove</button></div>`).join('')}</div>`},
+ Pages(){return `<div class="card" style="margin-bottom:14px"><button class="pri" onclick="newPage()">+ New page</button></div>`+S.pages.map(p=>`<form class="card f" style="margin-bottom:14px" onsubmit="savePage(event,'${p.id}')"><div><label>Title</label><input name="title" value="${esc(p.title)}" required></div>
+  <div><label>Show in menu</label><select name="on"><option value="1" ${p.on?'selected':''}>Yes</option><option value="0" ${p.on?'':'selected'}>No</option></select></div>
+  <div class="w"><label>Content</label><textarea name="body" rows="5">${esc(p.body)}</textarea></div>
+  <div class="w row" style="align-items:center">${p.img?`<img class="thumb" src="${p.img}" alt="">`:''}<button type="button" onclick="pick(d=>{pageById('${p.id}').img=d;save();admin()})">${p.img?'Change photo':'Add photo'}</button>${p.img?`<button type="button" class="danger" onclick="pageById('${p.id}').img='';save();admin()">Remove photo</button>`:''}<button class="pri">Save</button><button type="button" class="danger" onclick="delPage('${p.id}')">Delete</button><span class="sub" style="margin:0;font-size:12px">Link: #page-${esc(p.slug)}</span></div></form>`).join('')},
+ Reservations(){return `<div class="card tw">${resTable(S.res,true)}</div>`},
+ Settings(){const s=S.settings;const fld=(k,l,w)=>`<div class="${w?'w':''}"><label>${l}</label>${k==='about'?`<textarea name="${k}" rows="4">${esc(s[k])}</textarea>`:`<input name="${k}" value="${esc(s[k])}">`}</div>`;
+  return `<form class="card f" onsubmit="saveSet(event)">${fld('name','Restaurant name')}${fld('phone','Phone')}${fld('tagline','Tagline',1)}${fld('email','Email')}${fld('hours','Opening hours')}${fld('address','Address',1)}${fld('about','About text',1)}${fld('announce','Announcement bar (empty = hidden)',1)}${fld('ig','Instagram link')}${fld('fb','Facebook link')}<div><label>Accent color</label><input type="color" name="accent" value="${s.accent||'#ff7a1a'}"></div><div><label>Admin password</label><input name="pw" value="${esc(s.pw)}" required></div>
+  <div class="w row"><button type="button" onclick="pick(d=>{S.settings.heroImg=d;save();admin()})">${s.heroImg?'Change':'Add'} hero photo</button><button type="button" onclick="pick(d=>{S.settings.aboutImg=d;save();admin()})">${s.aboutImg?'Change':'Add'} about photo</button>${s.heroImg||s.aboutImg?'<button type="button" class="danger" onclick="clearImgs()">Remove photos</button>':''}</div>
+  <div class="w row"><button class="pri">Save changes</button><button type="button" onclick="backup()">Copy backup</button><button type="button" onclick="restore()">Restore backup</button><button type="button" class="danger" onclick="reset()">Reset demo data</button><span class="msg" id="sm"></span></div></form>`}
+};
+function resTable(list,act){return `<div class="tw"><table><tr><th>Guest</th><th>Date</th><th>Time</th><th>Guests</th><th>Status</th>${act?'<th></th>':''}</tr>
+ ${list.map(r=>`<tr><td>${esc(r.name)}<br><span class="sub" style="font-size:12px;margin:0">${esc(r.phone)}</span></td><td>${esc(r.date)}</td><td>${esc(r.time)}</td><td>${r.guests}</td><td><span class="tag ${r.status}">${r.status}</span></td>
+ ${act?`<td><div class="row"><button class="sm" onclick="setRes('${r.id}','confirmed')">Confirm</button><button class="sm" onclick="setRes('${r.id}','cancelled')">Cancel</button><button class="sm danger" onclick="delRes('${r.id}')">Delete</button></div></td>`:''}</tr>`).join('')||'<tr><td colspan="6">No reservations.</td></tr>'}</table></div>`}
+function clearImgs(){S.settings.heroImg='';S.settings.aboutImg='';save();admin()}
+function newPage(){const n=prompt('Page title');if(!n)return;let s=n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'page';if(S.pages.some(p=>p.slug===s))s+='-'+uid().slice(0,3);
+ S.pages.push({id:uid(),title:n,slug:s,body:'',img:'',on:true});save();admin()}
+function savePage(e,id){e.preventDefault();const f=Object.fromEntries(new FormData(e.target)),p=pageById(id);p.title=f.title;p.body=f.body;p.on=f.on==='1';save();admin()}
+function delPage(id){if(confirm('Delete this page?')){S.pages=S.pages.filter(p=>p.id!==id);save();admin()}}
+function setRes(id,st){S.res.find(r=>r.id===id).status=st;save();admin()}
+function delRes(id){if(confirm('Delete this reservation?')){S.res=S.res.filter(r=>r.id!==id);save();admin()}}
+function addDish(e){e.preventDefault();const f=Object.fromEntries(new FormData(e.target));S.menu.push({id:uid(),name:f.name,cat:f.cat,desc:f.desc,price:+f.price,on:true});save();admin()}
+function tog(id){const m=S.menu.find(x=>x.id===id);m.on=!m.on;save()}
+function delDish(id){if(confirm('Delete this dish?')){S.menu=S.menu.filter(m=>m.id!==id);save();admin()}}
+function editDish(id){const m=S.menu.find(x=>x.id===id);const n=prompt('Dish name',m.name);if(n===null)return;const d=prompt('Description',m.desc);const p=prompt('Price',m.price);
+ m.name=n||m.name;m.desc=d??m.desc;if(p&&!isNaN(+p))m.price=+p;save();admin()}
+function saveSet(e){e.preventDefault();Object.assign(S.settings,Object.fromEntries(new FormData(e.target)));save();applyAccent();admin();$('#sm').textContent='Saved ✓'}
+function reset(){if(confirm('Reset everything to demo data?')){S=JSON.parse(JSON.stringify(defaults));save();admin()}}
+route();
+</script>
+</body>
+</html>
